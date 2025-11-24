@@ -3,7 +3,12 @@ guid: ca79792a10e4734428d82f463507b99b
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Bancone
+    second: {fileID: 2100000, guid: 9a943093151d8094c9e93bd58d27da34, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
