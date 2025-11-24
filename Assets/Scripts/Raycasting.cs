@@ -10,7 +10,6 @@ public class Raycasting : MonoBehaviour
     [SerializeField] Transform _itemHolder;
     IPickable _currentItem;
 
-
     [Header("Settings")]
     [SerializeField] float _interactRayDistance = 2f;
     [SerializeField] LayerMask _interactLayer;
@@ -59,7 +58,7 @@ public class Raycasting : MonoBehaviour
         }
     }
 
-    public void RotateHeldItem(float mouseX, float mouseY)
+    public void RotateHeldItem(Vector2 mouseInput)
     {
         if (_currentItem == null) return;
 
@@ -67,8 +66,8 @@ public class Raycasting : MonoBehaviour
 
         float speed = 200f;
 
-        t.Rotate(Camera.main.transform.up, mouseX * speed * Time.deltaTime, Space.World);
-        t.Rotate(Camera.main.transform.right, -mouseY * speed * Time.deltaTime, Space.World);
+        t.Rotate(Camera.main.transform.up, mouseInput.x * speed * Time.deltaTime, Space.World);
+        t.Rotate(Camera.main.transform.right, -mouseInput.y * speed * Time.deltaTime, Space.World);
     }
 
     void OnDrawGizmos()

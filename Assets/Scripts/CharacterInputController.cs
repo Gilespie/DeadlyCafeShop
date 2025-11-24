@@ -8,32 +8,22 @@ public class CharacterInputController
     Vector2 _mouseDelta = Vector2.zero;
     public Vector2 MouseDelta => _mouseDelta;
 
-    Character _character;
-    bool isRotating = false;
-    public bool IsRotating => isRotating;
+    bool _isObjectRotating = false;
+    public bool IsObjectRotating => _isObjectRotating;
 
-    public CharacterInputController(Character character)
-    {
-        _character = character;
-    }
+    bool _isSprinting = false;
+    public bool IsSprinting => _isSprinting;
+
+    bool _isTakedObject = false;
+    public bool IsTakedObject => _isTakedObject;
 
     public void InputArtificialUpdate()
-    {
-        InputPC();
-    }
-
-    public void InputPC()
     {
         _inputDirection.x = Input.GetAxisRaw("Horizontal");
         _inputDirection.z = Input.GetAxisRaw("Vertical");
 
         _mouseDelta.x = Input.GetAxis("Mouse X");
         _mouseDelta.y = Input.GetAxis("Mouse Y");
-
-        if(Input.GetKey(KeyCode.LeftShift))
-        {
-            _character.Sprint(_inputDirection);
-        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -49,19 +39,8 @@ public class CharacterInputController
             }
         }
 
-        if(Input.GetMouseButtonDown(0))
-        {
-            _character.Interact();
-        }
-
-        if (Input.GetMouseButtonDown(1))
-            isRotating = true;
-
-        if (Input.GetMouseButtonUp(1))
-            isRotating = false;
-    }
-
-    public void FixedUpdateArtificial()
-    { 
+        _isTakedObject = Input.GetMouseButtonDown(0);
+        _isObjectRotating = Input.GetMouseButton(1);
+        _isSprinting = Input.GetKey(KeyCode.LeftShift);
     }
 }

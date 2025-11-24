@@ -10,48 +10,35 @@ public class Character : MonoBehaviour
 
     void Awake()
     {
-        _controller = new CharacterInputController(this);
         _movement = GetComponent<CharacterMovement>();
         _cameraFPS = GetComponentInChildren<CameraFPS>();
         _raycasting = GetComponentInChildren<Raycasting>();
+        _controller = new CharacterInputController();
     }
 
     void Update()
     {
         _controller.InputArtificialUpdate();
+        _raycasting.HighlightHover();
 
-        if (!_controller.IsRotating)
+        if(_controller.IsTakedObject)
         {
-            _cameraFPS.RotateCamera(_controller.MouseDelta);
-            float yaw = _controller.MouseDelta.x * _cameraFPS.LookSensitivity;
-            transform.Rotate(Vector3.up, yaw, Space.Self);
+            _raycasting.Interact();
         }
 
-        RotateHeldItem(_controller.MouseDelta);
-
-        _raycasting.HighlightHover();
+        if (_controller.IsObjectRotating)
+        { 
+            _raycasting.RotateHeldItem(_controller.MouseDelta);
+        }
+        else
+        {
+            _cameraFPS.RotateCamera(_controller.MouseDelta);
+            transform.Rotate(Vector3.up, _cameraFPS.YRot, Space.Self);
+        }
     }
 
     void FixedUpdate()
     {
-        if(_controller.InputDirection.sqrMagnitude > 0.001f)
-        {
-            _movement.Movement(_controller.InputDirection);
-        }
-    }
-
-    public void Interact()
-    {
-        _raycasting.Interact();
-    }
-
-    public void Sprint(Vector3 dir)
-    {
-        _movement.Sprint(dir);
-    }
-
-    public void RotateHeldItem(Vector2 md)
-    {
-        _raycasting.RotateHeldItem(md.x, md.y);
+        _movement.Movement(_controller.InputDirection, _controller.IsSprinting);
     }
 }

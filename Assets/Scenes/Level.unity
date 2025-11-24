@@ -205,9 +205,9 @@ GameObject:
   - component: {fileID: 330585546}
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
+  - component: {fileID: 330585549}
   - component: {fileID: 330585548}
   - component: {fileID: 330585547}
-  - component: {fileID: 330585549}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -348,7 +348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lookSensitivity: 2
   _invertY: 0
-  _maxPitch: 80
+  _xRotationLimit: 80
 --- !u!114 &330585549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -833,7 +833,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cff48bca8791dd843b8cb05e77a7bb0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speedMovement: 3
+  _walkspeed: 2
+  _sprintSpeed: 5
 --- !u!114 &1211869014
 MonoBehaviour:
   m_ObjectHideFlags: 0

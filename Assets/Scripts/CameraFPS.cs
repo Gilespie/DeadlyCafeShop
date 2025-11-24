@@ -5,11 +5,13 @@ public class CameraFPS : MonoBehaviour
     [SerializeField] float _lookSensitivity = 2f;
     public float LookSensitivity => _lookSensitivity;
     [SerializeField] bool _invertY = false;
-    [SerializeField] float _maxPitch = 80f;
-    float _pitch = 0f;
+    [SerializeField] float _xRotationLimit = 80f;
+    float _xRotation = 0f;
+    float _yRotation = 0f;
+    public float YRot => _yRotation;
     Camera _camera;
 
-    private void Awake()
+    void Awake()
     {
         _camera = GetComponent<Camera>();
 
@@ -21,9 +23,13 @@ public class CameraFPS : MonoBehaviour
     {
         Vector2 md = inputDelta * _lookSensitivity;
 
+        _yRotation = inputDelta.x * _lookSensitivity;
+
         float invert = _invertY ? 1f : -1f;
-        _pitch += md.y * invert;
-        _pitch = Mathf.Clamp(_pitch, -_maxPitch, _maxPitch);
-        _camera.transform.localEulerAngles = new Vector3(_pitch, 0f, 0f);
+
+        _xRotation += md.y * invert;
+        _xRotation = Mathf.Clamp(_xRotation, -_xRotationLimit, _xRotationLimit);
+
+        _camera.transform.localEulerAngles = new Vector3(_xRotation, 0f, 0f);
     }
 }
