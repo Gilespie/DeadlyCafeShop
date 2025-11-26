@@ -1,19 +1,25 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Raycasting : MonoBehaviour
 {
     [Header("Rays")]
-    Ray _interactRay;
     RaycastHit _interactHit;
 
     [Header("Pickup")]
     [SerializeField] Transform _itemHolder;
     IPickable _currentItem;
+    public IPickable CurrentItem => _currentItem;
 
     [Header("Settings")]
     [SerializeField] float _interactRayDistance = 2f;
     [SerializeField] LayerMask _interactLayer;
+
     IHighlight _lastHighlight;
+
+    void Update()
+    {
+        HighlightHover();
+    }
 
     public void HighlightHover()
     {
@@ -27,7 +33,6 @@ public class Raycasting : MonoBehaviour
                     highlight.HighlightOn();
                     _lastHighlight = highlight;
                 }
-
                 return;
             }
         }
@@ -43,15 +48,43 @@ public class Raycasting : MonoBehaviour
     {
         if (_currentItem != null)
         {
+            if (Physics.Raycast(transform.position, transform.forward,
+                                out _interactHit, _interactRayDistance, _interactLayer))
+            {
+                if (_interactHit.collider.TryGetComponent(out IInteractable interactable))
+                {
+                    bool used = interactable.Interact(this);
+
+                    if (used) return;
+                }
+            }
+
             _currentItem.OnDrop();
             _currentItem = null;
             return;
         }
 
-        if (Physics.Raycast(transform.position, transform.forward, out _interactHit, _interactRayDistance, _interactLayer))
+        bool interacted = false;
+
+        if (Physics.Raycast(transform.position, transform.forward,
+                            out _interactHit, _interactRayDistance, _interactLayer))
         {
-            if (_interactHit.collider.TryGetComponent(out IPickable pickable))
+            if (_interactHit.collider.TryGetComponent(out IInteractable interactable))
             {
+                interacted = interactable.Interact(this);
+            }
+
+            if (!interacted && _interactHit.collider.TryGetComponent(out IPickable pickable))
+            {
+                if (pickable is Cup cup && cup.IsLocked)
+                    return;
+
+                if (_currentItem != null)
+                {
+                    _currentItem.OnDrop();
+                    _currentItem = null;
+                }
+
                 pickable.OnPickUp(_itemHolder);
                 _currentItem = pickable;
             }
@@ -62,18 +95,29 @@ public class Raycasting : MonoBehaviour
     {
         if (_currentItem == null) return;
 
-        Transform t = (_currentItem as MonoBehaviour).transform;
-
-        float speed = 200f;
-
-        t.Rotate(Camera.main.transform.up, mouseInput.x * speed * Time.deltaTime, Space.World);
-        t.Rotate(Camera.main.transform.right, -mouseInput.y * speed * Time.deltaTime, Space.World);
+        if (_currentItem is InteractableObject obj)
+        {
+            obj.Rotate(mouseInput);
+        }
     }
 
+    public void PickItem(IPickable item)
+    {
+        if (_currentItem != null)
+        {
+            _currentItem.OnDrop();
+            _currentItem = null;
+        }
+
+        item.OnPickUp(_itemHolder);
+        _currentItem = item;
+    }
+
+    public void ClearItem() => _currentItem = null;
+
     void OnDrawGizmos()
-     {
-        _interactRay = new Ray(transform.position, transform.forward);
+    {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(_interactRay.origin, _interactRay.origin + _interactRay.direction * _interactRayDistance);
-     }
+        Gizmos.DrawLine(transform.position, transform.position + transform.forward * _interactRayDistance);
+    }
 }

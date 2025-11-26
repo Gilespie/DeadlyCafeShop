@@ -4,6 +4,7 @@ using UnityEngine.AI;
 public class GuardMovement : MonoBehaviour
 {
     [SerializeField] Character _character;
+    public Character Target => _character;
     [SerializeField] Transform _walkTarget;
     [SerializeField] float _walkSpeed = 1f;
     [SerializeField] float _runSpeed = 3f;

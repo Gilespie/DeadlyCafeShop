@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9099951144758804183}
+  - component: {fileID: 2854140012858014062}
   - component: {fileID: 6026148165668004095}
-  - component: {fileID: 520346739624250276}
-  - component: {fileID: 6674722520154854186}
+  - component: {fileID: 618995106474519169}
   m_Layer: 7
   m_Name: PapperCup
   m_TagString: Untagged
@@ -33,8 +33,24 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3044389137408303900}
+  - {fileID: 5020811177006210038}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2854140012858014062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370620953302692398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 633b4f5ccc362c14dbc31a7b052c1bd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _throwForce: 2
+  _speedRotation: 200
+  _lidPosition: {fileID: 5020811177006210038}
 --- !u!65 &6026148165668004095
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -56,7 +72,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.1, y: 0.17118943, z: 0.1}
   m_Center: {x: 0, y: -0.0039966702, z: 0.010000002}
---- !u!54 &520346739624250276
+--- !u!54 &618995106474519169
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,18 +99,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6674722520154854186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 370620953302692398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19e13e4d1be248d4d80ef7dbc70ffb52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6983836079647290072
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,3 +182,34 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8392626756182284870
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5020811177006210038}
+  m_Layer: 7
+  m_Name: LidPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5020811177006210038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8392626756182284870}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.064, y: 0.029, z: -0.049}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9099951144758804183}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

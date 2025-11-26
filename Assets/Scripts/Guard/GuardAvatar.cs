@@ -18,4 +18,9 @@ public class GuardAvatar : MonoBehaviour
     {
         _parent.StepSound();
     }
+
+    public void ThrowCup()
+    {
+        _parent.ThrowCup();
+    }
 }

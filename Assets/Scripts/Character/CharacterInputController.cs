@@ -16,6 +16,8 @@ public class CharacterInputController
 
     bool _isTakedObject = false;
     public bool IsTakedObject => _isTakedObject;
+    bool _isEscapePressed = false;
+    public bool IsEscapePressed => _isEscapePressed;
 
     public void InputArtificialUpdate()
     {
@@ -25,20 +27,7 @@ public class CharacterInputController
         _mouseDelta.x = Input.GetAxis("Mouse X");
         _mouseDelta.y = Input.GetAxis("Mouse Y");
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (Cursor.lockState == CursorLockMode.Locked)
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            }
-        }
-
+        _isEscapePressed = Input.GetKeyDown(KeyCode.Escape);
         _isTakedObject = Input.GetMouseButtonDown(0);
         _isObjectRotating = Input.GetMouseButton(1);
         _isSprinting = Input.GetKey(KeyCode.LeftShift);
